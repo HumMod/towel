@@ -24,11 +24,11 @@ public class FileFinder {
 
 		if(lastIndexTXT != -1)
 		{
-			FileFinder.txtFound(desiredVar, currentFilePath);
+			FileFinder.txtFound(desiredVar, currentFilePath);					//txt file found, time to search read it
 			//System.out.println("folderSearch first if = " + currentFilePath);
 		}
 
-		if(lastIndexDES == -1 && lastIndexREF == -1 && lastIndexTXT == -1)
+		if(lastIndexDES == -1 && lastIndexREF == -1 && lastIndexTXT == -1)		//another folder, so I need to search through it again
 		{
 			File folderFile = new File(currentFilePath);
 			//System.out.println("second if test = " + currentFilePath);
@@ -53,17 +53,17 @@ public class FileFinder {
     	File finalFile = new File(filePath);
     	//System.out.println("FileFinder -> txtFound -> finalFile name = " + finalFile.getAbsolutePath());
     	String fileName = finalFile.getAbsolutePath();
-    	if(fileName.lastIndexOf(".txt") == -1)
-    	{
-    	//	System.out.println("reached if statement = " + fileName);
-    		FileFinder.folderSearch(desiredVar, fileName);
+    	if(fileName.lastIndexOf(".txt") == -1)							//for some reason folders were being sent here
+    	{																//instead of fundamentally changing my code
+    	//	System.out.println("reached if statement = " + fileName);	//I just catch them here and send them to where they
+    		FileFinder.folderSearch(desiredVar, fileName);				//should be, folderSearch
     		return "";
     	}
     	Scanner txtReader = new Scanner(finalFile);
     	int maxIndex = -1;
     	String lines[] = new String[1000];
 
-    	while(txtReader.hasNext())
+    	while(txtReader.hasNext())										//reading the file and sending it to reader
     	{
     		maxIndex++;
     		lines[maxIndex] = txtReader.nextLine();

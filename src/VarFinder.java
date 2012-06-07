@@ -17,31 +17,31 @@ public class VarFinder {
     {
 		String directoryName = "C:\\Users\\GrahamWHusband\\Documents\\Grahams Stuff\\hummod\\HumMod-hummod-standalone-2d02143\\Display";
 		File directory = new File(directoryName);
-		String str[] = directory.list(); //just going into the directory of all files inside "display"
+		String str[] = directory.list(); 		//storing all files and folders of "display"
 
-		for(int folder = 0; folder < str.length; folder++)
+		for(int folder = 0; folder < str.length; folder++)		//allows me to search through all str[]
 		{
-			int lastIndexDES = str[folder].lastIndexOf(".DES");
-			int lastIndexREF = str[folder].lastIndexOf(".REF");
+			int lastIndexDES = str[folder].lastIndexOf(".DES");	//allows me to ignore DES and REF files
+			int lastIndexREF = str[folder].lastIndexOf(".REF");	//because java can't read them
 			int lastIndexTXT = str[folder].lastIndexOf(".txt");
 
-			if(lastIndexDES == -1 && lastIndexREF == -1 && lastIndexTXT == -1)
+			if(lastIndexDES == -1 && lastIndexREF == -1 && lastIndexTXT == -1)	//searches through folders
 			{
 				String filePath = directory.getAbsolutePath() + "\\" + str[folder];
 				//System.out.println("VarFinder -> filePath continues searching = " + filePath);
 				File myFolder = new File(filePath);
-				String subFiles[] = myFolder.list();
+				String subFiles[] = myFolder.list();							//creates an array to store info from the folders
 
 				for(int numFiles = 0; numFiles < subFiles.length; numFiles++)
 				{
-					String newestPath = filePath + "\\" + subFiles[numFiles];
+					String newestPath = filePath + "\\" + subFiles[numFiles];	//allows me to get into the actual file searcher
 					//System.out.println("VarFinder -> newestPath = " + newestPath);
 					FileFinder.folderSearch(desiredVar, newestPath);
 				}
 			}
 
-			if(lastIndexTXT != -1)
-			{
+			if(lastIndexTXT != -1)													//this is just in case changes are made in the future
+			{																		//and .txt files are immediately in the display folder
 				String filePath = directory.getAbsolutePath() + "\\" + str[folder];
 				//System.out.println("VarFinder -> filePath goes to text reader = " + filePath);
 				FileFinder.txtFound(desiredVar, filePath);

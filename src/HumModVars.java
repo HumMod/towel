@@ -20,19 +20,19 @@ public class HumModVars {
 
     public static void main(String[] args) throws IOException{
 
-    	for(int r = 0; r < 7; r--)
-    	{
-    		Scanner question = new Scanner(System.in);
+    	for(int r = 0; r < 7; r--)								//creates an infinite loop so the user doesn't have to restart for
+    	{														//each new variable
+    		Scanner question = new Scanner(System.in);			//Asking the user what they want
     		System.out.println("What are you looking for? Enter \"exit\" to terminate program.");
     		String variable = question.nextLine();
 
     		if(variable.equalsIgnoreCase("exit"))
     		{
-    			r = 9;
+    			r = 9;											//exits the loop
     			FileFinder.counter = 1;
     		}
     		else
-    			VarFinder.storeInfo(variable);
+    			VarFinder.storeInfo(variable);					//accesses the search function
     		if(FileFinder.counter == 0)
     			System.out.println("Sorry, your desired variable could not be found.");
 
