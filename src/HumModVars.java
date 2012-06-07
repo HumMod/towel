@@ -6,6 +6,13 @@
  * @author
  * @version 1.00 2012/6/1
  */
+
+ /**
+  * all code that has been made into a comment
+  * are testing codes to allow the user to see what they are doing
+  * and where they are in the progression of the program
+  * simply remove the comment marks to test the file
+  */
  import java.util.*;
  import java.io.*;
 
@@ -18,12 +25,16 @@ public class HumModVars {
     		Scanner question = new Scanner(System.in);
     		System.out.println("What are you looking for? Enter \"exit\" to terminate program.");
     		String variable = question.nextLine();
-    		String varFound;
 
     		if(variable.equalsIgnoreCase("exit"))
+    		{
     			r = 9;
+    			FileFinder.counter = 1;
+    		}
     		else
-    			System.out.println(VarFinder.storeInfo(variable));
+    			VarFinder.storeInfo(variable);
+    		if(FileFinder.counter == 0)
+    			System.out.println("Sorry, your desired variable could not be found.");
 
     	}
     	System.out.println("Thank you for using the HumMod Variable Finder.");
