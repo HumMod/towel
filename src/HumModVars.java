@@ -13,8 +13,16 @@
   * and where they are in the progression of the program
   * simply remove the comment marks to test the file
   */
- import java.util.*;
- import java.io.*;
+import java.util.*;
+import java.io.*;
+import java.awt.event.*;
+import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.*;
 
 public class HumModVars {
 

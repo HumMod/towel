@@ -7,6 +7,14 @@
  */
 import java.util.*;
 import java.io.*;
+import java.awt.event.*;
+import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.*;
 
 public class VarFinder {
 
@@ -35,16 +43,16 @@ public class VarFinder {
 				for(int numFiles = 0; numFiles < subFiles.length; numFiles++)
 				{
 					String newestPath = filePath + "\\" + subFiles[numFiles];	//allows me to get into the actual file searcher
-					//System.out.println("VarFinder -> newestPath = " + newestPath);
+				//	System.out.println("VarFinder -> newestPath = " + newestPath);
 					FileFinder.folderSearch(desiredVar, newestPath);
 				}
 			}
 
-			if(lastIndexTXT != -1)													//this is just in case changes are made in the future
+			if(lastIndexDES != -1)													//this is just in case changes are made in the future
 			{																		//and .txt files are immediately in the display folder
 				String filePath = directory.getAbsolutePath() + "\\" + str[folder];
 				//System.out.println("VarFinder -> filePath goes to text reader = " + filePath);
-				FileFinder.txtFound(desiredVar, filePath);
+				FileFinder.DESFound(desiredVar, filePath);
 			}
 
 		}

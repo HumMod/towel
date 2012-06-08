@@ -5,8 +5,16 @@
  * @author
  * @version 1.00 2012/6/1
  */
- import java.io.*;
- import java.util.*;
+import java.io.*;
+import java.util.*;
+import java.awt.event.*;
+import java.awt.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.*;
 
 public class FileFinder {
 
@@ -22,10 +30,10 @@ public class FileFinder {
 		int lastIndexREF = currentFilePath.lastIndexOf(".REF");
 		int lastIndexTXT = currentFilePath.lastIndexOf(".txt");
 
-		if(lastIndexTXT != -1)
+		if(lastIndexDES != -1)
 		{
-			FileFinder.txtFound(desiredVar, currentFilePath);					//txt file found, time to search read it
-			//System.out.println("folderSearch first if = " + currentFilePath);
+			FileFinder.DESFound(desiredVar, currentFilePath);					//txt file found, time to search read it
+		//	System.out.println("folderSearch first if = " + currentFilePath);
 		}
 
 		if(lastIndexDES == -1 && lastIndexREF == -1 && lastIndexTXT == -1)		//another folder, so I need to search through it again
@@ -41,36 +49,29 @@ public class FileFinder {
 			{
 				String filePath = currentFilePath + "\\" + subFiles[subFilesNum];
 			//	System.out.println("subFilesNum test = " + filePath);
-				FileFinder.txtFound(desiredVar, filePath);
+				FileFinder.DESFound(desiredVar, filePath);
 			//	System.out.println("foldersearch exit test");
 			}
 		}
 
     }
 
-    public static String txtFound(String desiredVar, String filePath) throws IOException
+    public static String DESFound(String desiredVar, String filePath) throws IOException
     {
-    	File finalFile = new File(filePath);
-    	//System.out.println("FileFinder -> txtFound -> finalFile name = " + finalFile.getAbsolutePath());
-    	String fileName = finalFile.getAbsolutePath();
-    	if(fileName.lastIndexOf(".txt") == -1)							//for some reason folders were being sent here
-    	{																//instead of fundamentally changing my code
-    	//	System.out.println("reached if statement = " + fileName);	//I just catch them here and send them to where they
-    		FileFinder.folderSearch(desiredVar, fileName);				//should be, folderSearch
+
+    	if(filePath.lastIndexOf(".DES") == -1 && filePath.lastIndexOf(".txt") == -1 && filePath.lastIndexOf(".REF") == -1)	//for some reason folders were being sent here
+    	{																													//instead of fundamentally changing my code
+    		//System.out.println("DES if statement = " + filePath);														//I just catch them here and send them to where they
+    		FileFinder.folderSearch(desiredVar, filePath);																	//should be, folderSearch
     		return "";
     	}
-    	Scanner txtReader = new Scanner(finalFile);
-    	int maxIndex = -1;
-    	String lines[] = new String[1000];
 
-    	while(txtReader.hasNext())										//reading the file and sending it to reader
+    	if(filePath.lastIndexOf(".DES") != -1)
     	{
-    		maxIndex++;
-    		lines[maxIndex] = txtReader.nextLine();
-    		//if(maxIndex == 0)
-    		//	System.out.println(lines[maxIndex]);
-    		PathOutput.output(desiredVar, fileName, lines[maxIndex]);
+    		PathOutput.output(desiredVar, filePath);
+    		return "";
     	}
     	return "";
+
     }
-    }
+}
