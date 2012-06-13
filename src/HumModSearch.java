@@ -24,7 +24,7 @@ public class HumModSearch extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Display.fxml"));
         
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
 }

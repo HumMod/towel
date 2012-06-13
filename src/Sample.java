@@ -8,6 +8,11 @@
 //If you delete this, you have made it to best save 3
 //If you delete this, you have made it to best save 4
 //If you delete this, you have made it to best save 5, which will display a pathway in the window
+//If you delete this, you have made it to best save 6, which displays multiplte paths
+//If you delete this, you have made it to best save 7, which displays everything appropriately,
+//but doesn't clear the arraylist
+//if you delete this, you have made it to best save 8, which will display everything needed for multiple clicks
+//but if there are too many paths, it will cut off display
 package hummodsearch;
 
 import java.io.BufferedReader;
@@ -16,6 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,14 +47,19 @@ public class Sample implements Initializable {
     
     private static int counter = 0;
     
+    private static ArrayList displayableList = new ArrayList();
+    
+    
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
-        System.out.println("You clicked me!");
+        //System.out.println("You clicked me!");
         //label.setText("Hello World!");
         CharSequence textFieldInput = searchBar.getCharacters();
         String lineInput = textFieldInput.toString();
         //System.out.println(lineInput);
         storeInfo(lineInput);
+        displayPaths();
+        
     }
     
     public static void storeInfo(String desiredVar) throws IOException
@@ -166,9 +177,15 @@ public class Sample implements Initializable {
     					int repeatLength = tabNames.length();						//ex: cell -> cell becomes cell
     					String compareTabs = theOutput.substring(repeatedInfo - repeatLength, repeatedInfo);
     					if(compareTabs.equalsIgnoreCase(tabNames))
-    						label.setText(theOutput.substring(0, repeatedInfo));
+                                        {
+                                            //System.out.println(theOutput);
+                                            displayableList.add(theOutput.substring(0, repeatedInfo));
+                                        }
     					else
-    						label.setText(theOutput);
+                                        {
+                                            //System.out.println(theOutput);
+                                            displayableList.add(theOutput);
+                                        }
     					counter = 1;										//this tells "main" that I have found a file that contains
 
 				}
@@ -179,6 +196,18 @@ public class Sample implements Initializable {
 	}
     }
     
+    public static void displayPaths()
+    {
+        String display = "";
+        for(int r = 0; r < displayableList.size(); r++)
+        {
+            display = display + (r + 1) + ". " + displayableList.get(r) + "\n";
+        }
+        if(display.equals(""))
+            display = "Your desired variable could not be found. Check your spelling and try again.";
+        label.setText(display);
+        displayableList.clear();
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO

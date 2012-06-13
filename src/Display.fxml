@@ -5,10 +5,47 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="320.0" xmlns:fx="http://javafx.com/fxml" fx:controller="hummodsearch.Sample">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml" fx:controller="hummodsearch.Sample">
   <children>
-    <Label fx:id="label" layoutX="14.0" layoutY="47.0" minHeight="16.0" minWidth="69.0" prefHeight="139.0" prefWidth="292.0" />
-    <TextField fx:id="searchBar" layoutX="14.0" layoutY="14.0" onAction="#handleButtonAction" prefWidth="292.0" promptText="Search Here..." />
+    <SplitPane dividerPositions="0.2989949748743719" focusTraversable="true" orientation="VERTICAL" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+          <children>
+            <TextField fx:id="searchBar" onAction="#handleButtonAction" prefWidth="255.0" promptText="Search Here..." AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+            <MenuBar prefHeight="27.0" prefWidth="599.9999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="-1.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Open" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+          </children>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="266.0" prefWidth="598.0">
+          <children>
+            <Label layoutY="14.0" text="The potential pathways for your variable are:" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="331.0">
+              <font>
+                <Font size="13.0" />
+              </font>
+            </Label>
+            <Label fx:id="label" alignment="TOP_LEFT" contentDisplay="TOP" minHeight="16.0" minWidth="69.0" prefHeight="230.0" prefWidth="572.0" wrapText="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="32.0" />
+          </children>
+        </AnchorPane>
+      </items>
+    </SplitPane>
   </children>
 </AnchorPane>
