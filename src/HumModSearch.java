@@ -4,11 +4,13 @@
  */
 package hummodsearch;
 
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -24,7 +26,20 @@ public class HumModSearch extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Display.fxml"));
         
+        stage.setTitle("HumMod Variable Finder - a search tool for \"the best, most complete, mathematical model of human physiology ever created.");
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
+        FadeTransition searchTransition = new FadeTransition(Duration.millis(1), Sample.searchBar);
+        searchTransition.setFromValue(1.0);
+        searchTransition.setToValue(0.0);
+        searchTransition.play();
+        FadeTransition helpTransition = new FadeTransition(Duration.millis(1), Sample.helpDisplay);
+        helpTransition.setFromValue(1.0);
+        helpTransition.setToValue(0.0);
+        helpTransition.play();
+        FadeTransition backButtonTransition = new FadeTransition(Duration.millis(1), Sample.helpBackButton);
+        backButtonTransition.setFromValue(1.0);
+        backButtonTransition.setToValue(0.0);
+        backButtonTransition.play();
     }
 }

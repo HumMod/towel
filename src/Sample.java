@@ -13,6 +13,7 @@
 //but doesn't clear the arraylist
 //if you delete this, you have made it to best save 8, which will display everything needed for multiple clicks
 //but if there are too many paths, it will cut off display
+//Another great save spot
 package hummodsearch;
 
 import java.io.BufferedReader;
@@ -23,12 +24,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 /**
  *
@@ -40,18 +43,42 @@ public class Sample implements Initializable {
     private static Label label;
     
     @FXML
-    private static TextField searchBar;
+    private static Label fileInputReceived;
     
     @FXML
-    private static Button searchButton;
+    public static TextField searchBar;
+            
+    @FXML
+    private static TextField fileLocation;
+    
+    @FXML
+    private static Button helpButton;
+    
+    @FXML
+    private static Button aboutButton;
+    
+    @FXML
+    public static Label helpDisplay;
+    
+    @FXML
+    private static Label potentialLine;
+    
+    @FXML
+    public static Button helpBackButton;
+    
+    @FXML
+    private static Button aboutBackButton;
     
     private static int counter = 0;
     
-    private static ArrayList displayableList = new ArrayList();
+    private static String fileInput = "";
+    
+    public static ArrayList displayableList = new ArrayList();
     
     
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
+        fileInputReceived.setText("");
         //System.out.println("You clicked me!");
         //label.setText("Hello World!");
         CharSequence textFieldInput = searchBar.getCharacters();
@@ -62,17 +89,139 @@ public class Sample implements Initializable {
         
     }
     
+    @FXML
+    private void handleHelpButton(ActionEvent event) throws IOException {
+        fileInputReceived.setText("");
+        helpDisplay.setText("TheHumMod variable Finder will allow you to search through HumMod for various variables. For instance, the Variable Finder can search for \"blood volume\" or \"nerve activity.\" It cannot search specifically for something like \"areterial blood volume.\" While this may seem slightly problematic, the variables displayed in the HumMod application are never used more than a few times, so results displayed for a generic search should not be lengthy.");
+        FadeTransition potentialTransition = new FadeTransition(Duration.millis(1), potentialLine);
+        potentialTransition.setFromValue(1.0);
+        potentialTransition.setToValue(0.0);
+        potentialTransition.play();
+        FadeTransition fileInputTransition = new FadeTransition(Duration.millis(1), fileInputReceived);
+        fileInputTransition.setFromValue(1.0);
+        fileInputTransition.setToValue(0.0);
+        fileInputTransition.play();
+        FadeTransition helpTransition = new FadeTransition(Duration.millis(1000), helpDisplay);
+        helpTransition.setFromValue(0.0);
+        helpTransition.setToValue(1.0);
+        helpTransition.play();
+        FadeTransition backButtonTransition = new FadeTransition(Duration.millis(1000), helpBackButton);
+        backButtonTransition.setFromValue(0.0);
+        backButtonTransition.setToValue(1.0);
+        backButtonTransition.play();
+        FadeTransition labelTransition = new FadeTransition(Duration.millis(1), label);
+        labelTransition.setFromValue(1.0);
+        labelTransition.setToValue(0.0);
+        labelTransition.play();
+    }
+    
+    @FXML
+    private void handleHelpBackButton(ActionEvent event) throws IOException {
+        fileInputReceived.setText("");
+        FadeTransition potentialTransition = new FadeTransition(Duration.millis(1000), potentialLine);
+        potentialTransition.setFromValue(0.0);
+        potentialTransition.setToValue(1.0);
+        potentialTransition.play();
+        FadeTransition fileInputTransition = new FadeTransition(Duration.millis(1000), fileInputReceived);
+        fileInputTransition.setFromValue(0.0);
+        fileInputTransition.setToValue(1.0);
+        fileInputTransition.play();
+        FadeTransition helpTransition = new FadeTransition(Duration.millis(1), helpDisplay);
+        helpTransition.setFromValue(1.0);
+        helpTransition.setToValue(0.0);
+        helpTransition.play();
+        FadeTransition backButtonTransition = new FadeTransition(Duration.millis(1), helpBackButton);
+        backButtonTransition.setFromValue(1.0);
+        backButtonTransition.setToValue(0.0);
+        backButtonTransition.play();
+        FadeTransition labelTransition = new FadeTransition(Duration.millis(1000), label);
+        labelTransition.setFromValue(0.0);
+        labelTransition.setToValue(1.0);
+        labelTransition.play();
+    }
+    
+    @FXML
+    private void handleAboutButton(ActionEvent event) throws IOException{
+        fileInputReceived.setText("");
+        helpDisplay.setText("I can't exactly say anything about HumMod right now because I don't know what they want me to say, but the Variable Finder is by me, Graham Husband");
+        FadeTransition potentialTransition = new FadeTransition(Duration.millis(1), potentialLine);
+        potentialTransition.setFromValue(1.0);
+        potentialTransition.setToValue(0.0);
+        potentialTransition.play();
+        FadeTransition fileInputTransition = new FadeTransition(Duration.millis(1), fileInputReceived);
+        fileInputTransition.setFromValue(1.0);
+        fileInputTransition.setToValue(0.0);
+        fileInputTransition.play();
+        FadeTransition helpTransition = new FadeTransition(Duration.millis(1000), helpDisplay);
+        helpTransition.setFromValue(0.0);
+        helpTransition.setToValue(1.0);
+        helpTransition.play();
+        FadeTransition backButtonTransition = new FadeTransition(Duration.millis(1000), helpBackButton);
+        backButtonTransition.setFromValue(0.0);
+        backButtonTransition.setToValue(1.0);
+        backButtonTransition.play();
+        FadeTransition labelTransition = new FadeTransition(Duration.millis(1), label);
+        labelTransition.setFromValue(1.0);
+        labelTransition.setToValue(0.0);
+        labelTransition.play();
+    }
+    
+    @FXML
+    private void handleFileInput(ActionEvent event) throws IOException {
+        CharSequence fileInputField = fileLocation.getCharacters();
+        fileInput = fileInputField.toString();
+        if(new File(fileInput).exists())
+        {
+            File inputTest = new File(fileInput);
+            String fileTest[] = inputTest.list();
+            boolean properInputFound = false;
+            for(int folder = 0; folder < fileTest.length; folder++)
+            {
+                if(fileTest[folder].equalsIgnoreCase("Display"))
+                {
+                    folder = fileTest.length + 1;
+                    fileInputReceived.setText("File Input has been successfully received.");
+                    properInputFound = true;
+                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(4000), fileInputReceived);
+                    fadeTransition.setFromValue(1.0);
+                    fadeTransition.setToValue(0.0);
+                    fadeTransition.play();
+                    FadeTransition textFieldTransition = new FadeTransition(Duration.millis(2000), fileLocation);
+                    textFieldTransition.setFromValue(1.0);
+                    textFieldTransition.setToValue(0.0);
+                    textFieldTransition.play();
+                    FadeTransition searchTransition = new FadeTransition(Duration.millis(1), searchBar);
+                    searchTransition.setFromValue(0.0);
+                    searchTransition.setToValue(1.0);
+                    searchTransition.play();
+                }
+                if(folder == fileTest.length - 1 && !properInputFound)
+                {
+                    fileInputReceived.setText("The File location you provided does not contain the necessary HumMod files. Please try again.\nExample: C:\\Users\\Documents\\hummod\\HumMod-hummod-standalone=2d02143");
+                }
+            }
+        }
+        else
+        {
+            fileInputReceived.setText("Your designated file location does not exist. Please try again.\nExample: C:\\Users\\Documents\\hummod\\HumMod-hummod-standalone=2d02143");
+        }
+    }
+    
     public static void storeInfo(String desiredVar) throws IOException
     {
-	String directoryName = "C:\\Users\\GrahamWHusband\\Documents\\Grahams Stuff\\hummod\\HumMod-hummod-standalone-2d02143\\Display";
-	//System.out.println("made it inside of the storeInfo method");
-        File directory = new File(directoryName);
-	String str[] = directory.list(); 		//storing all files and folders of "display"
+        if(new File(fileInput).exists() == false)
+            fileInputReceived.setText("You cannot begin searching until you have offered a valid file location for HumMod.");
+	else
+        {
+            String directoryName = fileInput + "\\Display";
+            //System.out.println("made it inside of the storeInfo method");
+            File directory = new File(directoryName);
+            String str[] = directory.list(); 		//storing all files and folders of "display"
 
-	for(int folder = 0; folder < str.length; folder++)		//allows me to search through all str[]
-	{
-		int lastIndexDES = str[folder].lastIndexOf(".DES");	//allows me to ignore DES and REF files
-		int lastIndexREF = str[folder].lastIndexOf(".REF");	//because java can't read them
+            for(int folder = 0; folder < str.length; folder++)		//allows me to search through all str[]
+            {
+                int lastIndexDES = str[folder].lastIndexOf(".DES");	//allows me to ignore DES and REF files
+                int lastIndexREF = str[folder].lastIndexOf(".REF");	//because java can't read them
 		int lastIndexTXT = str[folder].lastIndexOf(".txt");
 
 		if(lastIndexDES == -1 && lastIndexREF == -1 && lastIndexTXT == -1)	//searches through folders
@@ -97,7 +246,8 @@ public class Sample implements Initializable {
 			DESFound(desiredVar, filePath);
 		}
 
-	}
+            }
+        }
     }
     
     public static void folderSearch(String desiredVar, String currentFilePath) throws IOException
@@ -198,15 +348,21 @@ public class Sample implements Initializable {
     
     public static void displayPaths()
     {
-        String display = "";
-        for(int r = 0; r < displayableList.size(); r++)
+        int madeupstuff;
+        if(new File(fileInput).exists() == false)
+            madeupstuff = 0;
+        else
         {
-            display = display + (r + 1) + ". " + displayableList.get(r) + "\n";
+            String display = "";
+            for(int r = 0; r < displayableList.size(); r++)
+            {
+                display = display + (r + 1) + ". " + displayableList.get(r) + "\n";
+            }
+            if(display.equals(""))
+                display = "Your desired variable could not be found. Check your spelling and try again.";
+            label.setText(display);
+            displayableList.clear();
         }
-        if(display.equals(""))
-            display = "Your desired variable could not be found. Check your spelling and try again.";
-        label.setText(display);
-        displayableList.clear();
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
