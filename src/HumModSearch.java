@@ -26,10 +26,10 @@ public class HumModSearch extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("Display.fxml"));
         
-        stage.setTitle("HumMod Variable Finder - a search tool for \"the best, most complete, mathematical model of human physiology ever created.");
+        stage.setTitle("HumMod Display Search - a search tool for \"the best, most complete, mathematical model of human physiology ever created.\"");
         stage.setScene(new Scene(root, 600, 400));
         stage.show();
-        FadeTransition searchTransition = new FadeTransition(Duration.millis(1), Sample.searchBar);
+        FadeTransition searchTransition = new FadeTransition(Duration.millis(1), Sample.searchBox);
         searchTransition.setFromValue(1.0);
         searchTransition.setToValue(0.0);
         searchTransition.play();

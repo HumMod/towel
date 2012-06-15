@@ -3,17 +3,6 @@
  * and open the template in the editor.
  */
 
-//If you delete this, you have made it to best save 1
-//If you delete this, you have made it to best save 2
-//If you delete this, you have made it to best save 3
-//If you delete this, you have made it to best save 4
-//If you delete this, you have made it to best save 5, which will display a pathway in the window
-//If you delete this, you have made it to best save 6, which displays multiplte paths
-//If you delete this, you have made it to best save 7, which displays everything appropriately,
-//but doesn't clear the arraylist
-//if you delete this, you have made it to best save 8, which will display everything needed for multiple clicks
-//but if there are too many paths, it will cut off display
-//Another great save spot
 package hummodsearch;
 
 import java.io.BufferedReader;
@@ -31,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 
 /**
@@ -43,10 +33,16 @@ public class Sample implements Initializable {
     private static Label label;
     
     @FXML
+    public static HBox searchBox;
+    
+    @FXML
     private static Label fileInputReceived;
     
     @FXML
     public static TextField searchBar;
+    
+    @FXML
+    private static Button searchButton;
             
     @FXML
     private static TextField fileLocation;
@@ -56,7 +52,7 @@ public class Sample implements Initializable {
     
     @FXML
     private static Button aboutButton;
-    
+        
     @FXML
     public static Label helpDisplay;
     
@@ -190,7 +186,7 @@ public class Sample implements Initializable {
                     textFieldTransition.setFromValue(1.0);
                     textFieldTransition.setToValue(0.0);
                     textFieldTransition.play();
-                    FadeTransition searchTransition = new FadeTransition(Duration.millis(1), searchBar);
+                    FadeTransition searchTransition = new FadeTransition(Duration.millis(1), searchBox);
                     searchTransition.setFromValue(0.0);
                     searchTransition.setToValue(1.0);
                     searchTransition.play();
@@ -315,7 +311,7 @@ public class Sample implements Initializable {
 			inFile[r] = stream.readLine();
 			if(inFile[r] != null && r >= 9)
 			{
-				if(inFile[r].contains("<label>") && inFile[r].toLowerCase().contains(lowerCaseVar))
+				if(inFile[r].contains("<label>") && inFile[r].toLowerCase().contains(lowerCaseVar) || inFile[r].contains("<structurename>") && inFile[r].toLowerCase().contains(lowerCaseVar))
 				{
 					int displayIndex = filePathway.indexOf("Display\\");		//this code just changes the file name into
     					int DESIndex = filePathway.lastIndexOf(".DES");				//usable directions

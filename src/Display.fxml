@@ -5,6 +5,7 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -14,17 +15,11 @@
       <items>
         <AnchorPane maxHeight="-Infinity" minHeight="-Infinity" minWidth="0.0" prefHeight="106.0" prefWidth="598.0">
           <children>
-            <Text layoutX="48.0" layoutY="26.0" scaleX="1.3642083417446895" scaleY="2.6916299559471364" stroke="BLACK" text="Welcome to the HumMod Variable Finder">
+            <Text layoutX="48.0" layoutY="26.0" scaleX="1.3642083417446895" scaleY="2.6916299559471364" stroke="BLACK" text="Welcome to the HumMod Display Search">
               <font>
                 <Font name="Batang" size="12.0" />
               </font>
             </Text>
-            <HBox id="HBox" alignment="CENTER" spacing="5.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="70.0">
-              <children>
-                <TextField id="openButton" fx:id="fileLocation" onAction="#handleFileInput" prefWidth="315.0" promptText="Input File Location Here..." />
-                <TextField fx:id="searchBar" onAction="#handleButtonAction" prefWidth="255.0" promptText="Search Here..." />
-              </children>
-            </HBox>
             <HBox id="HBox" alignment="CENTER" layoutX="445.0" layoutY="10.0" spacing="20.0">
               <children>
                 <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelpButton" prefWidth="63.0" text="Help" />
@@ -32,18 +27,26 @@
               </children>
             </HBox>
             <Button fx:id="helpBackButton" layoutX="487.0" layoutY="39.0" mnemonicParsing="false" onAction="#handleHelpBackButton" prefHeight="21.0" prefWidth="63.0" text="Back" />
+            <TextField id="openButton" fx:id="fileLocation" layoutX="14.0" layoutY="72.0" onAction="#handleFileInput" prefWidth="255.0" promptText="Input File Location Here..." />
+            <HBox id="HBox" fx:id="searchBox" alignment="CENTER" layoutX="275.0" layoutY="71.0" spacing="5.0">
+              <children>
+                <TextField fx:id="searchBar" onAction="#handleButtonAction" prefWidth="255.0" promptText="Search Here..." HBox.hgrow="ALWAYS" />
+                <HBox id="HBox" alignment="CENTER" spacing="5.0" />
+                <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleButtonAction" text="Search" />
+              </children>
+            </HBox>
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="278.0" prefWidth="598.0">
           <children>
-            <Label fx:id="potentialLine" layoutY="14.0" text="The potential pathways for your variable are:" AnchorPane.leftAnchor="12.0">
+            <Label fx:id="potentialLine" layoutY="14.0" text="The potential pathways for your variable are:" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="311.0">
               <font>
                 <Font name="System Bold" size="13.0" />
               </font>
             </Label>
-            <Label fx:id="label" alignment="TOP_LEFT" contentDisplay="TOP" minHeight="16.0" minWidth="69.0" prefHeight="230.0" prefWidth="572.0" wrapText="true" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="32.0" />
             <Label fx:id="fileInputReceived" alignment="TOP_LEFT" contentDisplay="TOP" layoutX="14.0" layoutY="32.0" prefHeight="230.0" prefWidth="572.0" text="To start, input the location of your HumMod file.  For instance, C:\Users\Documents\hummod\HumMod-hummod-standalone-2d02143" wrapText="true" />
-            <Label fx:id="helpDisplay" alignment="TOP_LEFT" layoutX="13.0" layoutY="14.0" prefHeight="248.0" prefWidth="576.0" wrapText="true" />
+            <Label fx:id="helpDisplay" alignment="TOP_LEFT" prefHeight="230.0" prefWidth="576.0" wrapText="true" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="13.0" AnchorPane.rightAnchor="9.0" />
+            <Label fx:id="label" alignment="TOP_LEFT" prefHeight="241.0" prefWidth="570.0" AnchorPane.bottomAnchor="13.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="-68.0" />
           </children>
           <padding>
             <Insets top="100.0" />
