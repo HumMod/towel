@@ -4,6 +4,7 @@
  */
 package hummodsearch;
 
+import java.io.File;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +18,7 @@ import javafx.util.Duration;
  * @author GrahamWHusband
  */
 public class HumModSearch extends Application {
-    
+        
     public static void main(String[] args) {
         Application.launch(HumModSearch.class, args);
     }
@@ -41,5 +42,5 @@ public class HumModSearch extends Application {
         backButtonTransition.setFromValue(1.0);
         backButtonTransition.setToValue(0.0);
         backButtonTransition.play();
-    }
+    }    
 }

@@ -27,7 +27,6 @@
               </children>
             </HBox>
             <Button fx:id="helpBackButton" layoutX="487.0" layoutY="39.0" mnemonicParsing="false" onAction="#handleHelpBackButton" prefHeight="21.0" prefWidth="63.0" text="Back" />
-            <TextField id="openButton" fx:id="fileLocation" layoutX="14.0" layoutY="72.0" onAction="#handleFileInput" prefWidth="255.0" promptText="Input File Location Here..." />
             <HBox id="HBox" fx:id="searchBox" alignment="CENTER" layoutX="275.0" layoutY="71.0" spacing="5.0">
               <children>
                 <TextField fx:id="searchBar" onAction="#handleButtonAction" prefWidth="255.0" promptText="Search Here..." HBox.hgrow="ALWAYS" />
@@ -35,6 +34,7 @@
                 <Button fx:id="searchButton" mnemonicParsing="false" onAction="#handleButtonAction" text="Search" />
               </children>
             </HBox>
+            <Button fx:id="OpenFileButton" layoutX="14.0" layoutY="71.0" mnemonicParsing="false" onAction="#handleFileOpener" text="Open File" />
           </children>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="278.0" prefWidth="598.0">

@@ -15,12 +15,14 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 /**
@@ -33,6 +35,9 @@ public class Sample implements Initializable {
     private static Label label;
     
     @FXML
+    private static Button OpenFileButton;
+    
+    @FXML
     public static HBox searchBox;
     
     @FXML
@@ -43,10 +48,7 @@ public class Sample implements Initializable {
     
     @FXML
     private static Button searchButton;
-            
-    @FXML
-    private static TextField fileLocation;
-    
+                
     @FXML
     private static Button helpButton;
     
@@ -70,6 +72,64 @@ public class Sample implements Initializable {
     private static String fileInput = "";
     
     public static ArrayList displayableList = new ArrayList();
+    
+    public static File file;
+    
+    @FXML
+    private void handleFileOpener(ActionEvent event){  
+
+        OpenFileButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                FileChooser fileChooser = new FileChooser();
+ 
+                //Set extension filter
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Application Files (*.EXE)", "*.EXE");
+                fileChooser.getExtensionFilters().add(extFilter);
+             
+                //Show open file dialog
+                file = fileChooser.showOpenDialog(null);
+             
+                designateFileLocation(file.getAbsolutePath());              
+            }
+            });
+    }
+    
+    public static void designateFileLocation(String prelimFileLoc){
+        int humModIndex = prelimFileLoc.indexOf("HumMod-hummod-standalone-2d02143\\");
+        int folderName = "HumMod-hummod-standalone-2d02143\\".length();
+        String fileLocation = prelimFileLoc.substring(0, humModIndex + folderName - 1);
+        File testFile = new File(fileLocation);
+        String folderFiles[] = testFile.list();
+        boolean properInputFound = false;
+        
+        for(int folderIndex = 0; folderIndex < folderFiles.length; folderIndex++)
+        {
+            if(folderFiles[folderIndex].equalsIgnoreCase("HumMod.EXE") || folderFiles[folderIndex].equalsIgnoreCase("Display"))
+            {
+                folderIndex = folderFiles.length + 1;
+                properInputFound = true;
+                fileInput = fileLocation;
+                fileInputReceived.setText("Your file input has been successfully received.");
+                FadeTransition fileInputTransition = new FadeTransition(Duration.millis(4000), fileInputReceived);
+                fileInputTransition.setFromValue(1.0);
+                fileInputTransition.setToValue(0.0);
+                fileInputTransition.play();
+                FadeTransition openButtonTransition = new FadeTransition(Duration.millis(1), OpenFileButton);
+                openButtonTransition.setFromValue(1.0);
+                openButtonTransition.setToValue(0.0);
+                openButtonTransition.play();
+                FadeTransition searchButtonTransition = new FadeTransition(Duration.millis(1), searchBox);
+                searchButtonTransition.setFromValue(0.0);
+                searchButtonTransition.setToValue(1.0);
+                searchButtonTransition.play();
+            }
+            if(folderIndex == folderFiles.length - 1 && !properInputFound)
+            {
+                fileInputReceived.setText("Your file input is invalid.\nPlease give the location of your HumMod application.");
+            }
+        }
+    }
     
     
     @FXML
@@ -161,48 +221,7 @@ public class Sample implements Initializable {
         labelTransition.setToValue(0.0);
         labelTransition.play();
     }
-    
-    @FXML
-    private void handleFileInput(ActionEvent event) throws IOException {
-        CharSequence fileInputField = fileLocation.getCharacters();
-        fileInput = fileInputField.toString();
-        if(new File(fileInput).exists())
-        {
-            File inputTest = new File(fileInput);
-            String fileTest[] = inputTest.list();
-            boolean properInputFound = false;
-            for(int folder = 0; folder < fileTest.length; folder++)
-            {
-                if(fileTest[folder].equalsIgnoreCase("Display"))
-                {
-                    folder = fileTest.length + 1;
-                    fileInputReceived.setText("File Input has been successfully received.");
-                    properInputFound = true;
-                    FadeTransition fadeTransition = new FadeTransition(Duration.millis(4000), fileInputReceived);
-                    fadeTransition.setFromValue(1.0);
-                    fadeTransition.setToValue(0.0);
-                    fadeTransition.play();
-                    FadeTransition textFieldTransition = new FadeTransition(Duration.millis(2000), fileLocation);
-                    textFieldTransition.setFromValue(1.0);
-                    textFieldTransition.setToValue(0.0);
-                    textFieldTransition.play();
-                    FadeTransition searchTransition = new FadeTransition(Duration.millis(1), searchBox);
-                    searchTransition.setFromValue(0.0);
-                    searchTransition.setToValue(1.0);
-                    searchTransition.play();
-                }
-                if(folder == fileTest.length - 1 && !properInputFound)
-                {
-                    fileInputReceived.setText("The File location you provided does not contain the necessary HumMod files. Please try again.\nExample: C:\\Users\\Documents\\hummod\\HumMod-hummod-standalone=2d02143");
-                }
-            }
-        }
-        else
-        {
-            fileInputReceived.setText("Your designated file location does not exist. Please try again.\nExample: C:\\Users\\Documents\\hummod\\HumMod-hummod-standalone=2d02143");
-        }
-    }
-    
+        
     public static void storeInfo(String desiredVar) throws IOException
     {
         if(new File(fileInput).exists() == false)
@@ -295,7 +314,8 @@ public class Sample implements Initializable {
             else
             {   
                 String structureName = desiredVar.substring(0, desiredVar.indexOf("."));
-                String variableName = desiredVar.substring(desiredVar.indexOf("."));
+                String variableName = desiredVar.substring(desiredVar.indexOf(".") + 1);
+                System.out.println(structureName + "//////" + variableName);
                 structureFind(structureName.toLowerCase(), variableName.toLowerCase(), filePath);
             }
             return "";
@@ -308,45 +328,47 @@ public class Sample implements Initializable {
     {
         boolean structureFound = false;
         boolean variableFound = false;
-        BufferedReader stream = new BufferedReader(new FileReader(filePathway));
-        String inFile[] = new String[200];
-        
-        for(int r = 0; r < inFile.length; r++)
-        {
-            inFile[r] = stream.readLine();
-            if(inFile[r] != null && r >= 9)
+        try (BufferedReader stream = new BufferedReader(new FileReader(filePathway))) {
+            String inFile[] = new String[200];
+            //System.out.println("made it to structure find method");
+            
+            for(int r = 0; r < inFile.length; r++)
             {
-                if(inFile[r].toLowerCase().indexOf(structureName) != -1)
-                    structureFound = true;
-                if(inFile[r].toLowerCase().indexOf(variableName) != -1)
-                    variableFound = true;
-            }
-            if(structureFound && variableFound)
-            {
-                r = inFile.length + 1;
-                int displayIndex = filePathway.indexOf("Display\\");		//this code just changes the file name into
-                int DESIndex = filePathway.lastIndexOf(".DES");				//usable directions
-    		String shortenedFile = filePathway.substring(displayIndex + 8, DESIndex);
-    		String theOutput = shortenedFile.replace("\\", " / ");
+                inFile[r] = stream.readLine();
+                if(inFile[r] != null && r >= 9)
+                {
+                    //System.out.println("made it inside first if statement");
+                    if(inFile[r].toLowerCase().indexOf(structureName) != -1)
+                        structureFound = true;
+                    if(inFile[r].toLowerCase().indexOf(variableName) != -1)
+                        variableFound = true;
+                }
+                if(structureFound && variableFound)
+                {
+                    r = inFile.length + 1;
+                    int displayIndex = filePathway.indexOf("Display\\");		//this code just changes the file name into
+                    int DESIndex = filePathway.lastIndexOf(".DES");				//usable directions
+                        String shortenedFile = filePathway.substring(displayIndex + 8, DESIndex);
+                        String theOutput = shortenedFile.replace("\\", " / ");
 
-    		int repeatedInfo = theOutput.lastIndexOf(" / ");			//I noticed that the final tab was repeating itself
-    		String tabNames = theOutput.substring(repeatedInfo + 4);	//so I had to correct for it here
-    		int repeatLength = tabNames.length();						//ex: cell -> cell becomes cell
-    		String compareTabs = theOutput.substring(repeatedInfo - repeatLength, repeatedInfo);
-    		if(compareTabs.equalsIgnoreCase(tabNames))
-                {
-                    //System.out.println(theOutput);
-                    displayableList.add(theOutput.substring(0, repeatedInfo));
+                        int repeatedInfo = theOutput.lastIndexOf(" / ");			//I noticed that the final tab was repeating itself
+                        String tabNames = theOutput.substring(repeatedInfo + 4);	//so I had to correct for it here
+                        int repeatLength = tabNames.length();						//ex: cell -> cell becomes cell
+                        String compareTabs = theOutput.substring(repeatedInfo - repeatLength, repeatedInfo);
+                        if(compareTabs.equalsIgnoreCase(tabNames))
+                    {
+                        //System.out.println(theOutput);
+                        displayableList.add(theOutput.substring(0, repeatedInfo));
+                    }
+                        else
+                    {
+                        //System.out.println(theOutput);
+                        displayableList.add(theOutput);
+                    }
+                        counter = 1;
                 }
-    		else
-                {
-                    //System.out.println(theOutput);
-                    displayableList.add(theOutput);
-                }
-    		counter = 1;
             }
         }
-        stream.close();
     }
     
     public static void output(String desiredVar, String filePathway) throws IOException
