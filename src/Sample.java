@@ -41,7 +41,7 @@ public class Sample implements Initializable {
     public static HBox searchBox;
     
     @FXML
-    private static Label fileInputReceived;
+    public static Label fileInputReceived;
     
     @FXML
     public static TextField searchBar;
@@ -76,7 +76,7 @@ public class Sample implements Initializable {
     public static File file;
     
     @FXML
-    private void handleFileOpener(ActionEvent event){  
+    private void handleFileOpener(ActionEvent event){                   //This method allows the "File Open" button to work
 
         OpenFileButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -84,7 +84,7 @@ public class Sample implements Initializable {
                 FileChooser fileChooser = new FileChooser();
  
                 //Set extension filter
-                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Application Files (*.EXE)", "*.EXE");
+                FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Application Files (*.EXE)", "*.EXE"); //I only want users looking for the HumMod app
                 fileChooser.getExtensionFilters().add(extFilter);
              
                 //Show open file dialog
@@ -96,21 +96,21 @@ public class Sample implements Initializable {
     }
     
     public static void designateFileLocation(String prelimFileLoc){
-        int humModIndex = prelimFileLoc.indexOf("HumMod-hummod-standalone-2d02143\\");
-        int folderName = "HumMod-hummod-standalone-2d02143\\".length();
+        int humModIndex = prelimFileLoc.indexOf("HumMod-hummod-standalone-2d02143\\");      //This method tests to see if the designated
+        int folderName = "HumMod-hummod-standalone-2d02143\\".length();                     //file is actually the HumMod app
         String fileLocation = prelimFileLoc.substring(0, humModIndex + folderName - 1);
         File testFile = new File(fileLocation);
         String folderFiles[] = testFile.list();
         boolean properInputFound = false;
         
-        for(int folderIndex = 0; folderIndex < folderFiles.length; folderIndex++)
-        {
+        for(int folderIndex = 0; folderIndex < folderFiles.length; folderIndex++)           //cycle through the folder that the HumMod app is
+        {                                                                                   //in to find if it has the necessary files for my app
             if(folderFiles[folderIndex].equalsIgnoreCase("HumMod.EXE") || folderFiles[folderIndex].equalsIgnoreCase("Display"))
             {
                 folderIndex = folderFiles.length + 1;
                 properInputFound = true;
                 fileInput = fileLocation;
-                fileInputReceived.setText("Your file input has been successfully received.");
+                fileInputReceived.setText("Your file input has been successfully received.");   //This tells the user that the app is ready for use
                 FadeTransition fileInputTransition = new FadeTransition(Duration.millis(4000), fileInputReceived);
                 fileInputTransition.setFromValue(1.0);
                 fileInputTransition.setToValue(0.0);
@@ -124,8 +124,8 @@ public class Sample implements Initializable {
                 searchButtonTransition.setToValue(1.0);
                 searchButtonTransition.play();
             }
-            if(folderIndex == folderFiles.length - 1 && !properInputFound)
-            {
+            if(folderIndex == folderFiles.length - 1 && !properInputFound)                  //If I have cycled through the entire folder and I couldn't
+            {                                                                               //find the files, I tell them to search again
                 fileInputReceived.setText("Your file input is invalid.\nPlease give the location of your HumMod application.");
             }
         }
@@ -133,8 +133,8 @@ public class Sample implements Initializable {
     
     
     @FXML
-    private void handleButtonAction(ActionEvent event) throws IOException {
-        fileInputReceived.setText("");
+    private void handleButtonAction(ActionEvent event) throws IOException {     //This method handles all search action
+        fileInputReceived.setText("");                                          //by getting characters from the search text field
         //System.out.println("You clicked me!");
         //label.setText("Hello World!");
         CharSequence textFieldInput = searchBar.getCharacters();
@@ -146,9 +146,12 @@ public class Sample implements Initializable {
     }
     
     @FXML
-    private void handleHelpButton(ActionEvent event) throws IOException {
-        fileInputReceived.setText("");
-        helpDisplay.setText("TheHumMod variable Finder will allow you to search through HumMod for various variables. For instance, the Variable Finder can search for \"blood volume\" or \"nerve activity.\" It cannot search specifically for something like \"areterial blood volume.\" While this may seem slightly problematic, the variables displayed in the HumMod application are never used more than a few times, so results displayed for a generic search should not be lengthy.");
+    private void handleHelpButton(ActionEvent event) throws IOException {       //This method smoothly displays my help information when
+        fileInputReceived.setText("");                                          //the "Help" button is clicked.
+        String startup = "When opening the program, use the \"Open File\" button and find your edition of HumMod. It should be in the same folder as its associated files for this tool to work properly.\n\n";
+        String generic = "TheHumMod variable Finder will allow you to search through HumMod for various variables. For instance, the Variable Finder can search for \"blood volume\" or \"nerve activity.\" It cannot search specifically for something like \"areterial blood volume.\" While this may seem slightly problematic, the variables displayed in the HumMod application are never used more than a few times, so results displayed for a generic search should not be lengthy.";
+        String specific = " Additionally, you can search for specific global names. These are the names that HumMod uses when making calculations. For instance, \"CellProtein.Degradation.\" These are the most specific names used in HumMod and will yeild the most concise results.";
+        helpDisplay.setText(startup + generic + specific);
         FadeTransition potentialTransition = new FadeTransition(Duration.millis(1), potentialLine);
         potentialTransition.setFromValue(1.0);
         potentialTransition.setToValue(0.0);
@@ -161,7 +164,7 @@ public class Sample implements Initializable {
         helpTransition.setFromValue(0.0);
         helpTransition.setToValue(1.0);
         helpTransition.play();
-        FadeTransition backButtonTransition = new FadeTransition(Duration.millis(1000), helpBackButton);
+        FadeTransition backButtonTransition = new FadeTransition(Duration.millis(1), helpBackButton);
         backButtonTransition.setFromValue(0.0);
         backButtonTransition.setToValue(1.0);
         backButtonTransition.play();
@@ -172,8 +175,8 @@ public class Sample implements Initializable {
     }
     
     @FXML
-    private void handleHelpBackButton(ActionEvent event) throws IOException {
-        fileInputReceived.setText("");
+    private void handleHelpBackButton(ActionEvent event) throws IOException {   //This method handles the back button for both the "About" and
+        fileInputReceived.setText("");                                          //"Help" buttons
         FadeTransition potentialTransition = new FadeTransition(Duration.millis(1000), potentialLine);
         potentialTransition.setFromValue(0.0);
         potentialTransition.setToValue(1.0);
@@ -197,7 +200,7 @@ public class Sample implements Initializable {
     }
     
     @FXML
-    private void handleAboutButton(ActionEvent event) throws IOException{
+    private void handleAboutButton(ActionEvent event) throws IOException{       //This method handles action from the "About" button
         fileInputReceived.setText("");
         helpDisplay.setText("I can't exactly say anything about HumMod right now because I don't know what they want me to say, but the Variable Finder is by me, Graham Husband");
         FadeTransition potentialTransition = new FadeTransition(Duration.millis(1), potentialLine);
@@ -212,7 +215,7 @@ public class Sample implements Initializable {
         helpTransition.setFromValue(0.0);
         helpTransition.setToValue(1.0);
         helpTransition.play();
-        FadeTransition backButtonTransition = new FadeTransition(Duration.millis(1000), helpBackButton);
+        FadeTransition backButtonTransition = new FadeTransition(Duration.millis(1), helpBackButton);
         backButtonTransition.setFromValue(0.0);
         backButtonTransition.setToValue(1.0);
         backButtonTransition.play();
@@ -222,46 +225,41 @@ public class Sample implements Initializable {
         labelTransition.play();
     }
         
-    public static void storeInfo(String desiredVar) throws IOException
+    public static void storeInfo(String desiredVar) throws IOException          //This is where my test starts
     {
-        if(new File(fileInput).exists() == false)
-            fileInputReceived.setText("You cannot begin searching until you have offered a valid file location for HumMod.");
-	else
+        String directoryName = fileInput + "\\Display";
+        //System.out.println("made it inside of the storeInfo method");
+        File directory = new File(directoryName);
+        String str[] = directory.list();                                        //storing all files and folders of "display"
+
+        for(int folder = 0; folder < str.length; folder++)		//allows me to search through all str[]
         {
-            String directoryName = fileInput + "\\Display";
-            //System.out.println("made it inside of the storeInfo method");
-            File directory = new File(directoryName);
-            String str[] = directory.list(); 		//storing all files and folders of "display"
+            int lastIndexDES = str[folder].lastIndexOf(".DES");                 //allows me to ignore DES and REF files
+            int lastIndexREF = str[folder].lastIndexOf(".REF");                 //because java can't read them
+            int lastIndexTXT = str[folder].lastIndexOf(".txt");
 
-            for(int folder = 0; folder < str.length; folder++)		//allows me to search through all str[]
+            if(lastIndexDES == -1 && lastIndexREF == -1 && lastIndexTXT == -1)	//searches through folders
             {
-                int lastIndexDES = str[folder].lastIndexOf(".DES");	//allows me to ignore DES and REF files
-                int lastIndexREF = str[folder].lastIndexOf(".REF");	//because java can't read them
-		int lastIndexTXT = str[folder].lastIndexOf(".txt");
+		String filePath = directory.getAbsolutePath() + "\\" + str[folder];
+		//System.out.println("VarFinder -> filePath continues searching = " + filePath);
+		File myFolder = new File(filePath);
+		String subFiles[] = myFolder.list();				//creates an array to store info from the folders
 
-		if(lastIndexDES == -1 && lastIndexREF == -1 && lastIndexTXT == -1)	//searches through folders
+		for(int numFiles = 0; numFiles < subFiles.length; numFiles++)
 		{
-			String filePath = directory.getAbsolutePath() + "\\" + str[folder];
-			//System.out.println("VarFinder -> filePath continues searching = " + filePath);
-			File myFolder = new File(filePath);
-			String subFiles[] = myFolder.list();							//creates an array to store info from the folders
-
-			for(int numFiles = 0; numFiles < subFiles.length; numFiles++)
-			{
-				String newestPath = filePath + "\\" + subFiles[numFiles];	//allows me to get into the actual file searcher
-			//	System.out.println("VarFinder -> newestPath = " + newestPath);
-				folderSearch(desiredVar, newestPath);
-			}
+                	String newestPath = filePath + "\\" + subFiles[numFiles];	//allows me to get into the actual file searcher
+		//	System.out.println("VarFinder -> newestPath = " + newestPath);
+			folderSearch(desiredVar, newestPath);
 		}
-
-		if(lastIndexDES != -1)													//this is just in case changes are made in the future
-		{																		//and .txt files are immediately in the display folder
-			String filePath = directory.getAbsolutePath() + "\\" + str[folder];
-			//System.out.println("VarFinder -> filePath goes to text reader = " + filePath);
-			DESFound(desiredVar, filePath);
-		}
-
             }
+
+            if(lastIndexDES != -1)                                              //this is just in case changes are made in the future
+            {									//and .DES files are immediately in the display folder
+                String filePath = directory.getAbsolutePath() + "\\" + str[folder];
+                //System.out.println("VarFinder -> filePath goes to text reader = " + filePath);
+                DESFound(desiredVar, filePath);
+            }
+
         }
     }
     
@@ -274,12 +272,12 @@ public class Sample implements Initializable {
 
 	if(lastIndexDES != -1)
 	{
-		DESFound(desiredVar, currentFilePath);					//txt file found, time to search read it
+		DESFound(desiredVar, currentFilePath);					//DES file found, time to read it
 	//	System.out.println("folderSearch first if = " + currentFilePath);
 	}
 
 	if(lastIndexDES == -1 && lastIndexREF == -1 && lastIndexTXT == -1)		//another folder, so I need to search through it again
-	{
+	{                                                                               //This if statement also filters out any TXT and REF files
 		File folderFile = new File(currentFilePath);
 		//System.out.println("second if test = " + currentFilePath);
 		String subFiles[] = folderFile.list();
@@ -300,22 +298,23 @@ public class Sample implements Initializable {
     public static String DESFound(String desiredVar, String filePath) throws IOException
     {
 
-    	if(filePath.lastIndexOf(".DES") == -1 && filePath.lastIndexOf(".txt") == -1 && filePath.lastIndexOf(".REF") == -1)	//for some reason folders were being sent here
-    	{																													//instead of fundamentally changing my code
-    		//System.out.println("DES if statement = " + filePath);														//I just catch them here and send them to where they
-    		folderSearch(desiredVar, filePath);																	//should be, folderSearch
-    		return "";
+    	if(filePath.lastIndexOf(".DES") == -1 && filePath.lastIndexOf(".txt") == -1 && filePath.lastIndexOf(".REF") == -1)
+    	{
+    		//System.out.println("DES if statement = " + filePath);			//for some reason folders were being sent here
+    		folderSearch(desiredVar, filePath);                                     //instead of fundamentally changing my code
+    		return "";                                                              //I just catch them here and send them to where they shoud be, folderSearch
     	}
 
     	if(filePath.lastIndexOf(".DES") != -1)
     	{
-            if(desiredVar.indexOf(".") == -1)
-    		output(desiredVar, filePath);
+            if(desiredVar.indexOf(".") == -1)               //This if-else statement tests whether the desired variable is a global or generic name
+    		output(desiredVar, filePath);               //they are two different tests so I need to search appropriately
             else
             {   
                 String structureName = desiredVar.substring(0, desiredVar.indexOf("."));
+                //System.out.println(structureName);
                 String variableName = desiredVar.substring(desiredVar.indexOf(".") + 1);
-                System.out.println(structureName + "//////" + variableName);
+                //System.out.println(variableName);
                 structureFind(structureName.toLowerCase(), variableName.toLowerCase(), filePath);
             }
             return "";
@@ -326,18 +325,18 @@ public class Sample implements Initializable {
     
     public static void structureFind(String structureName, String variableName, String filePathway) throws FileNotFoundException, IOException
     {
+        //System.out.println(structureName + "///////" + variableName);
         boolean structureFound = false;
         boolean variableFound = false;
         try (BufferedReader stream = new BufferedReader(new FileReader(filePathway))) {
             String inFile[] = new String[200];
-            //System.out.println("made it to structure find method");
+            //System.out.println("inside buffered reader");
             
-            for(int r = 0; r < inFile.length; r++)
-            {
-                inFile[r] = stream.readLine();
-                if(inFile[r] != null && r >= 9)
+            for(int r = 0; r < inFile.length; r++)                              //I read through the file here. The booleans ensure that I find
+            {                                                                   //the structure name and the variable name because they are often
+                inFile[r] = stream.readLine();                                  //on different lines in the code. ex: "<structurename> CellProtein"
+                if(inFile[r] != null && r >= 9)                                 //"<variablename> Degradation"
                 {
-                    //System.out.println("made it inside first if statement");
                     if(inFile[r].toLowerCase().indexOf(structureName) != -1)
                         structureFound = true;
                     if(inFile[r].toLowerCase().indexOf(variableName) != -1)
@@ -347,71 +346,44 @@ public class Sample implements Initializable {
                 {
                     r = inFile.length + 1;
                     int displayIndex = filePathway.indexOf("Display\\");		//this code just changes the file name into
-                    int DESIndex = filePathway.lastIndexOf(".DES");				//usable directions
+                    int DESIndex = filePathway.lastIndexOf(".DES");			//usable directions
                         String shortenedFile = filePathway.substring(displayIndex + 8, DESIndex);
                         String theOutput = shortenedFile.replace("\\", " / ");
 
-                        int repeatedInfo = theOutput.lastIndexOf(" / ");			//I noticed that the final tab was repeating itself
-                        String tabNames = theOutput.substring(repeatedInfo + 4);	//so I had to correct for it here
-                        int repeatLength = tabNames.length();						//ex: cell -> cell becomes cell
-                        String compareTabs = theOutput.substring(repeatedInfo - repeatLength, repeatedInfo);
-                        if(compareTabs.equalsIgnoreCase(tabNames))
-                    {
-                        //System.out.println(theOutput);
-                        displayableList.add(theOutput.substring(0, repeatedInfo));
-                    }
-                        else
-                    {
-                        //System.out.println(theOutput);
                         displayableList.add(theOutput);
-                    }
-                        counter = 1;
                 }
             }
+            stream.close();
         }
     }
-    
+        
     public static void output(String desiredVar, String filePathway) throws IOException
     {
-    	String lowerCaseVar = desiredVar.toLowerCase();
+    	String lowerCaseVar = desiredVar.toLowerCase();                         //this keeps my code from being case-sensitive
     	String inFile[] = new String[200];
 	BufferedReader stream;
 
 	try {
-		stream = new BufferedReader (new FileReader(filePathway));
+            stream = new BufferedReader (new FileReader(filePathway));
 
-		for(int r = 0; r < inFile.length; r++)
-		{
-			inFile[r] = stream.readLine();
-			if(inFile[r] != null && r >= 9)
-			{
-				if(inFile[r].contains("<label>") && inFile[r].toLowerCase().contains(lowerCaseVar))
-				{
-					int displayIndex = filePathway.indexOf("Display\\");		//this code just changes the file name into
-    					int DESIndex = filePathway.lastIndexOf(".DES");				//usable directions
-    					String shortenedFile = filePathway.substring(displayIndex + 8, DESIndex);
-    					String theOutput = shortenedFile.replace("\\", " / ");
-
-    					int repeatedInfo = theOutput.lastIndexOf(" / ");			//I noticed that the final tab was repeating itself
-    					String tabNames = theOutput.substring(repeatedInfo + 4);	//so I had to correct for it here
-    					int repeatLength = tabNames.length();						//ex: cell -> cell becomes cell
-    					String compareTabs = theOutput.substring(repeatedInfo - repeatLength, repeatedInfo);
-    					if(compareTabs.equalsIgnoreCase(tabNames))
-                                        {
-                                            //System.out.println(theOutput);
-                                            displayableList.add(theOutput.substring(0, repeatedInfo));
-                                        }
-    					else
-                                        {
-                                            //System.out.println(theOutput);
-                                            displayableList.add(theOutput);
-                                        }
-    					counter = 1;										//this tells "main" that I have found a file that contains
-
-				}
-			}
-		}
-                stream.close();
+            for(int r = 0; r < inFile.length; r++)
+            {
+                inFile[r] = stream.readLine();
+                if(inFile[r] != null && r >= 9)
+                {
+                    if(inFile[r].contains("<label>") && inFile[r].toLowerCase().contains(lowerCaseVar))
+                    {
+                        int displayIndex = filePathway.indexOf("Display\\");		//this code just changes the file name into
+                        int DESIndex = filePathway.lastIndexOf(".DES");			//usable directions
+                        String shortenedFile = filePathway.substring(displayIndex + 8, DESIndex);
+                        String theOutput = shortenedFile.replace("\\", " / ");
+                        
+                        if(theOutput.indexOf("Tree / ") == -1)
+                            displayableList.add(theOutput);
+                    }
+                }
+            }
+            stream.close();
 	} catch (FileNotFoundException e)
 	{
 	}
@@ -419,21 +391,16 @@ public class Sample implements Initializable {
     
     public static void displayPaths()
     {
-        int madeupstuff;
-        if(new File(fileInput).exists() == false)
-            madeupstuff = 0;
+        String display = "";
+        if(displayableList.isEmpty())           //Just in case the variable isn't found.
+            display = "Your desired variable could not be found. Check your spelling and try again.";
         else
         {
-            String display = "";
-            for(int r = 0; r < displayableList.size(); r++)
-            {
-                display = display + (r + 1) + ". " + displayableList.get(r) + "\n";
-            }
-            if(display.equals(""))
-                display = "Your desired variable could not be found. Check your spelling and try again.";
-            label.setText(display);
-            displayableList.clear();
+            for(int r = 0; r < displayableList.size(); r++)                     //I add all of the elements in the list together
+                display = display + "•  " + displayableList.get(r) + "\n";      //to create my output of potential locations
         }
+        label.setText(display);
+        displayableList.clear();        //I have to clear the list or else it will continue to add to itself
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
