@@ -10,7 +10,7 @@ Towel was created and developed by Graham Husband, a freshman at Vanderbilt Univ
 during his time at the Student Undergraduate Research Experience (SURE program), 2012, at the University Mississippi
 Medical Center (UMMC). Graham developed this tool under Dr. Robert Hester, a professor of physiology at UMMC.
 
-#### Help
+### Help
 To use Towel effectively, use the following instructions.
 
 1. Download the ".jar" file called "HumModSearch.jar"
@@ -20,7 +20,7 @@ To use Towel effectively, use the following instructions.
 3. Once you have designated the apporpriate file, a message "Your file input has been successfully received" will display
 4. Search away
 
-##### How to search
+### How to search
 
 When using Towel, there are two ways to search: common searches and global searches.
 A common name search searches for medical measurements included in HumMod (ex: "blood volume" or "nerve activity").
