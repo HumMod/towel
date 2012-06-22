@@ -2,15 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
-/*
- * It should be noted that all code in "//" comments
- * is designated as tests. When these lines are un-commented,
- * they will allow the user to test how far the search is going
- * before failure if there is a bug with the program
- */
 package hummodsearch;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -24,9 +21,13 @@ import javafx.util.Duration;
  * @author GrahamWHusband
  */
 public class HumModSearch extends Application {
+    
+    public static String[] myStuff;
         
     public static void main(String[] args) {
         Application.launch(HumModSearch.class, args);
+        
+        myStuff = args;
     }
     
     @Override
@@ -45,5 +46,26 @@ public class HumModSearch extends Application {
         backButtonTransition.setFromValue(1.0);
         backButtonTransition.setToValue(0.0);
         backButtonTransition.play();
+        
+        /*if(new File("HumModSearchyStuff.xml").exists()){
+            System.out.println("Stuff stuff stuff");
+            String filename = "HumModSearchyStuff.xml";
+            
+            FileInputStream fis = null;
+            ObjectInputStream in = null;
+
+            try
+            {
+                fis = new FileInputStream(filename);
+                in = new ObjectInputStream(fis);
+                Sample.directoryName = (String)in.readObject();
+                in.close();
+            }
+            catch(IOException | ClassNotFoundException ex)
+            {
+            }
+            Sample.fileInputReceived.setText("Your presaved settings have been found. You may begin searching.");
+        }*/
     }    
 }
+

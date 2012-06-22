@@ -2,26 +2,31 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package hummodsearch;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.animation.FadeTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
@@ -32,7 +37,13 @@ import javafx.util.Duration;
 public class Sample implements Initializable {
     
     @FXML
-    private static Label label;
+    public static Label label;
+    
+    @FXML
+    public static VBox labelBox;
+    
+    @FXML
+    public static ScrollBar scroller;
     
     @FXML
     private static Button OpenFileButton;
@@ -75,12 +86,27 @@ public class Sample implements Initializable {
     
     public static File file;
     
+    public static String directoryName;
+    
+    @FXML
+    private void handleScroller(ActionEvent event){
+
+        scroller.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> ov,
+                Number old_val, Number new_val) {
+                    labelBox.setLayoutY(-new_val.doubleValue());
+            }
+        });
+    }
+    
     @FXML
     private void handleFileOpener(ActionEvent event){                   //This method allows the "File Open" button to work
 
         OpenFileButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                
                 FileChooser fileChooser = new FileChooser();
  
                 //Set extension filter
@@ -90,12 +116,35 @@ public class Sample implements Initializable {
                 //Show open file dialog
                 file = fileChooser.showOpenDialog(null);
              
-                designateFileLocation(file.getAbsolutePath());              
+                boolean goodPath = designateFileLocation(file.getAbsolutePath());
+                /*if(goodPath){
+                    System.out.println("hahahahaha");
+                    String filename = "HumModSearchyStuff.xml";
+                    //if(HumModSearch.myStuff.length > 0){
+                    //    System.out.println(filename);
+                    //    filename = HumModSearch.myStuff[0];
+                    //}
+
+                    FileOutputStream fos = null;
+                    ObjectOutputStream out = null;
+                    try
+                    {
+                        fos = new FileOutputStream(filename);
+                        out = new ObjectOutputStream(fos);
+                        out.writeObject(file.getAbsolutePath());
+                        out.close();
+                    }
+                    catch(IOException ex)
+                    {
+                    }
+                }*/
             }
             });
     }
     
-    public static void designateFileLocation(String prelimFileLoc){
+    
+    
+    public static boolean designateFileLocation(String prelimFileLoc){
         int humModIndex = prelimFileLoc.indexOf("HumMod-hummod-standalone-2d02143\\");      //This method tests to see if the designated
         int folderName = "HumMod-hummod-standalone-2d02143\\".length();                     //file is actually the HumMod app
         String fileLocation = prelimFileLoc.substring(0, humModIndex + folderName - 1);
@@ -123,12 +172,15 @@ public class Sample implements Initializable {
                 searchButtonTransition.setFromValue(0.0);
                 searchButtonTransition.setToValue(1.0);
                 searchButtonTransition.play();
+                return true;
             }
             if(folderIndex == folderFiles.length - 1 && !properInputFound)                  //If I have cycled through the entire folder and I couldn't
             {                                                                               //find the files, I tell them to search again
                 fileInputReceived.setText("Your file input is invalid.\nPlease give the location of your HumMod application.");
+                return false;
             }
         }
+        return false;
     }
     
     
@@ -227,7 +279,7 @@ public class Sample implements Initializable {
         
     public static void storeInfo(String desiredVar) throws IOException          //This is where my test starts
     {
-        String directoryName = fileInput + "\\Display";
+        directoryName = fileInput + "\\Display";
         //System.out.println("made it inside of the storeInfo method");
         File directory = new File(directoryName);
         String str[] = directory.list();                                        //storing all files and folders of "display"
@@ -347,9 +399,10 @@ public class Sample implements Initializable {
                     r = inFile.length + 1;
                     int displayIndex = filePathway.indexOf("Display\\");		//this code just changes the file name into
                     int DESIndex = filePathway.lastIndexOf(".DES");			//usable directions
-                        String shortenedFile = filePathway.substring(displayIndex + 8, DESIndex);
-                        String theOutput = shortenedFile.replace("\\", " / ");
-
+                    String shortenedFile = filePathway.substring(displayIndex + 8, DESIndex);
+                    String theOutput = shortenedFile.replace("\\", " --> ");
+                        
+                    if(!theOutput.contains("Tree --> "))    
                         displayableList.add(theOutput);
                 }
             }
@@ -376,9 +429,9 @@ public class Sample implements Initializable {
                         int displayIndex = filePathway.indexOf("Display\\");		//this code just changes the file name into
                         int DESIndex = filePathway.lastIndexOf(".DES");			//usable directions
                         String shortenedFile = filePathway.substring(displayIndex + 8, DESIndex);
-                        String theOutput = shortenedFile.replace("\\", " / ");
+                        String theOutput = shortenedFile.replace("\\", " --> ");
                         
-                        if(theOutput.indexOf("Tree / ") == -1)
+                        if(theOutput.indexOf("Tree --> ") == -1)
                             displayableList.add(theOutput);
                     }
                 }
@@ -407,3 +460,4 @@ public class Sample implements Initializable {
         // TODO
     }    
 }
+
