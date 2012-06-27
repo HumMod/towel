@@ -6,7 +6,7 @@ A cross-platform tool to identify the paths available to reach panels that conta
 Towel is open-sourced through HC Simulations, LLC under GPL 2.0.
 
 ### Effective use of Towel
-1. Download the ".jar" file called "HumModSearch.jar"
+1. Download the ".jar" file called ["HumModSearch.jar"](https://github.com/downloads/HumMod/towel/HumModSearch.jar)
 2. Open the file and click the "Open File" button 
   * locate your local copy of HumMod ("HumMod.exe").
   * your local copy and its associated files (folders labeled: "Display", "Structure", etc.) must be in the same folder
