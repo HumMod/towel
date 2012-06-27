@@ -1,9 +1,9 @@
 # Towel
 
-A cross-platform tool to identify the paths available to reach panels that contain desired information.
+The rescue blanket for the maze of HumMod.
 
-## License
-Towel is open-sourced through HC Simulations, LLC under GPL 2.0.
+## Requirements
+The only requirement is Java FX 2.0, which isn't yet released to OS X.  However, enterprising individuals can find developer versions on the [Java FX](http://docs.oracle.com/javafx/) site.
 
 ### Effective use of Towel
 1. Download the ".jar" file called ["HumModSearch.jar"](https://github.com/downloads/HumMod/towel/HumModSearch.jar)
@@ -37,3 +37,6 @@ can offer.
 
 ### Created By
 Towel was created and developed by Graham Husband, a freshman at Vanderbilt University, during the 2012 University of Mississippi Medical Center (UMC) Student Undergraduate Research Experience (SURE program). Graham completed his SURE under the mentorship of Dr. Robert Hester, Professor of Physiology and Head of the Center for Computational Medicine at UMC.
+
+## License
+Towel is open-sourced through HC Simulations, LLC under GPL 2.0.
