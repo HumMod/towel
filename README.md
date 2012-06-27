@@ -30,5 +30,10 @@ Any characters listed before the period are considered the Structure Name. Searc
 the Structure and Variable names (ex: "CellProtein.Degradation") will yield the most specific and concise results Towel
 can offer.
 
+### Pitfalls
+- Spelling
+- Too specific
+- Too lengthy
+
 ### Created By
 Towel was created and developed by Graham Husband, a freshman at Vanderbilt University, during the 2012 University of Mississippi Medical Center (UMC) Student Undergraduate Research Experience (SURE program). Graham completed his SURE under the mentorship of Dr. Robert Hester, Professor of Physiology and Head of the Center for Computational Medicine at UMC.
